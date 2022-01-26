@@ -111,7 +111,7 @@
                     <div class="card">
                         <img src="img/gallery/4.jpg" class="card-img-top" alt="gallery4">
                         <div class="card-body">
-                          <p class="card-text">Komik ini merupakan komik pertama saya, saya buat sekitar Agustus-September 2021 yang menggambarkan orang yang sangat dicintai rakyat Indonesia, Ya. orang yang bersepatu coklat</p>
+                          <p class="card-text">Komik ini merupakan komik pertama saya, saya buat sekitar Agustus-September 2021 yang menggambarkan orang yang sangat dicintai rakyat indonesia, Ya. orang yang bersepatu coklat</p>
                         </div>
                       </div>
                 </div>
@@ -139,23 +139,31 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    <form>
+                  <div class="alert alert-success alert-dismissible fade show d-none my-alert" role="alert">
+                    <strong>Horeee!</strong> Pesan kamu sudah diterima.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                    <form name="fathur-form">
                         <div class="mb-3">
                           <label for="Name" class="form-label">Name</label>
-                          <input type="type" class="form-control" id="name" aria-describedby="name">
+                          <input type="type" class="form-control" id="name" aria-describedby="name" name="nama">
                         </div>
 
                         <div class="mb-3">
                           <label for="email" class="form-label">Email</label>
-                          <input type="email" class="form-control" id="email" aria-describedby="email">
+                          <input type="email" class="form-control" id="email" aria-describedby="email" name="email">
                         </div>
 
                         <div class="mb-3">
                             <label for="pesan" class="form-label">Massage</label>
-                            <textarea class="form-control" id="pesan" rows="5"></textarea>
+                            <textarea class="form-control" id="pesan" rows="5" name="pesan"></textarea>
                           </div>
                         
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary btn-kirim">Submit</button>
+                        <div class="spinner-border text-primary btn-loading d-none" role="status">
+                          <span class="visually-hidden">Loading...</span>
+                        </div>
+                        
                       </form>
                 </div>
             </div>
@@ -169,6 +177,32 @@
         <p>Created with Confusion <i class="bi bi-hurricane text-white"></i> by <a href="https://www.instagram.com/ffathurrrhmnn" class="text-white fw-bold">Fathur Rahman</a></p>
     </footer>
     <!-- Footer Akhir -->
+
+    <script>
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbw_fdVj7CivdW_KqJlE5gdoc97jI1sLdxUbxLkHkf1kSGx0bD4D3iSZRixmtcNmKLfB/exec'
+      const form = document.forms['fathur-form']
+      const btnKirim = document.querySelector('.btn-kirim');
+      const btnLoading = document.querySelector('.btn-loading');
+      const myAlert = document.querySelector('.my-alert');
+    
+      form.addEventListener('submit', e => {
+        e.preventDefault()
+        // ketika tombol submit diklik
+        // tampilkan tombol loading hilangkan tombol kirim
+        btnLoading.classList.toggle('d-none');
+        btnKirim.classList.toggle('d-none');
+        
+        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+          .then(response => {
+            btnLoading.classList.toggle('d-none');
+            btnKirim.classList.toggle('d-none');
+            myAlert.classList.toggle('d-none');
+            form.reset();
+            console.log('Success!', response)
+          })
+          .catch(error => console.error('Error!', error.message))
+      })
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   </body>
